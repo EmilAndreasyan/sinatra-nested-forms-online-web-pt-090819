@@ -4,14 +4,17 @@ module FormsLab
   class App < Sinatra::Base
 
     # code other routes/actions here
-  get '/' do
+  get '/new' do
     
     erb :'pirates/new'
   end
   
-  post '/pirates/show' do
+  post '/pirates' do
     @pirate = Pirate.all(params[:pirate])
-    @ship = Ship.all(params[:ship])
+    params[:pirate][:ship].each do |details|
+      Ship.new(details)
+    end
+    @ships = Ship.all
   
     erb :'pirates/show'
   end
